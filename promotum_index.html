@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promotum — Events & Experiences</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0C0C0E;
+      --surface: #151518;
+      --card: #1A1A1F;
+      --accent: #E8A838;
+      --accent-hover: #D49530;
+      --text: #F0EFEB;
+      --muted: #8E8D89;
+      --border: #2A2A30;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(12,12,14,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: var(--bg);
+      padding: 10px 24px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-hover); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,168,56,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700; line-height: 1.1;
+      max-width: 800px; margin-bottom: 24px;
+    }
+    .hero p {
+      font-size: 18px; color: var(--muted);
+      max-width: 540px; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--accent); color: var(--bg);
+      padding: 14px 32px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      padding: 14px 32px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none; border: 1.5px solid var(--border);
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex; gap: 56px; margin-top: 72px;
+      padding-top: 40px; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700; color: var(--accent);
+    }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 48px; }
+    .section-eyebrow {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700; margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px; color: var(--muted);
+      max-width: 560px; margin-bottom: 56px;
+    }
+
+    /* ── WHAT WE DO ── */
+    #whatwedo { background: var(--surface); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 30px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .service-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(232,168,56,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 20px;
+    }
+    .service-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── EVENTS ── */
+    #events { background: var(--bg); }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .event-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .event-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .event-banner {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 600;
+      position: relative; overflow: hidden;
+    }
+    .event-banner::before {
+      content: ''; position: absolute; inset: 0;
+      opacity: 0.15;
+    }
+    .eb-1 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+    .eb-2 { background: linear-gradient(135deg, #2d132c 0%, #801336 50%, #c72c41 100%); }
+    .eb-3 { background: linear-gradient(135deg, #0a3d2e 0%, #145a42 50%, #1e7a58 100%); }
+    .event-body { padding: 24px 28px; }
+    .event-date {
+      display: inline-block;
+      font-size: 12px; font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .event-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .event-body p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .event-tag {
+      display: inline-block;
+      font-size: 12px; font-weight: 600;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-right: 6px;
+    }
+
+    /* ── WHY US ── */
+    #why { background: var(--surface); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px; max-width: 1100px; margin: 0 auto;
+    }
+    .why-item { text-align: center; padding: 20px; }
+    .why-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .why-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .why-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── CONTACT / CTA ── */
+    #contact {
+      background: var(--bg);
+      text-align: center;
+      padding: 100px 24px 120px;
+    }
+    #contact .section-desc { margin-left: auto; margin-right: auto; }
+    .contact-row {
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap; margin-top: 32px;
+    }
+    .contact-chip {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px 24px; border-radius: 12px;
+      font-size: 14px; color: var(--muted);
+    }
+    .contact-chip span { font-size: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 600;
+    }
+    .footer-brand span { color: var(--accent); }
+    footer p { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      .hero-stats { gap: 32px; flex-wrap: wrap; justify-content: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Promotum<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#whatwedo">What We Do</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="login_page.html" class="nav-cta">Login</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Events · Experiences · Engagement</div>
+    <h1>We Bring Ideas to Life Through Unforgettable Events</h1>
+    <p>Promotum is a full-service events and promotions company that crafts immersive experiences — from corporate summits to cultural festivals.</p>
+    <div class="hero-btns">
+      <a href="#events" class="btn-primary">Explore Events</a>
+      <a href="#whatwedo" class="btn-outline">What We Do</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">250+</div>
+        <div class="stat-label">Events Delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Brand Partners</div>
+      </div>
+      <div>
+        <div class="stat-num">15K+</div>
+        <div class="stat-label">Attendees Engaged</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section id="whatwedo">
+    <div class="section-eyebrow">What We Do</div>
+    <div class="section-title">End-to-End Event Solutions</div>
+    <div class="section-desc">From concept to curtain call, we handle every detail so you can focus on the experience.</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎤</div>
+        <h3>Corporate Events</h3>
+        <p>Conferences, product launches, town halls, and leadership summits designed to inform, inspire, and leave a lasting impression on your audience.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎶</div>
+        <h3>Concerts & Festivals</h3>
+        <p>Large-scale music events, cultural festivals, and live entertainment experiences with world-class production, sound, and stage design.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏆</div>
+        <h3>Brand Activations</h3>
+        <p>Pop-up experiences, product sampling, influencer meets, and interactive installations that put your brand directly in the hands of consumers.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Exhibitions & Expos</h3>
+        <p>Trade show booths, art exhibitions, and gallery nights — designed, built, and managed with precision to maximise footfall and engagement.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💍</div>
+        <h3>Private & Social Events</h3>
+        <p>Weddings, milestone celebrations, galas, and private gatherings styled with elegance, personalisation, and seamless coordination.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📣</div>
+        <h3>Promotions & Marketing</h3>
+        <p>On-ground promotions, digital campaigns, influencer partnerships, and PR events that amplify your message and drive measurable results.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <div class="section-eyebrow">Upcoming Events</div>
+    <div class="section-title">What's Happening Next</div>
+    <div class="section-desc">Catch our latest productions. Each one is crafted to connect brands with their audiences in meaningful ways.</div>
+    <div class="events-grid">
+      <div class="event-card">
+        <div class="event-banner eb-1">Tech & Innovation Summit</div>
+        <div class="event-body">
+          <div class="event-date">Aug 18, 2026</div>
+          <h3>Tech & Innovation Summit 2026</h3>
+          <p>A two-day conference bringing together 500+ founders, investors, and technologists to explore the future of AI, climate tech, and digital health.</p>
+          <span class="event-tag">Conference</span>
+          <span class="event-tag">Tech</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-banner eb-2">Soundwave Festival</div>
+        <div class="event-body">
+          <div class="event-date">Sep 05, 2026</div>
+          <h3>Soundwave Music Festival</h3>
+          <p>An open-air festival featuring 20+ artists across three stages, immersive light installations, food villages, and curated brand zones.</p>
+          <span class="event-tag">Festival</span>
+          <span class="event-tag">Music</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-banner eb-3">Green Future Expo</div>
+        <div class="event-body">
+          <div class="event-date">Oct 12, 2026</div>
+          <h3>Green Future Expo</h3>
+          <p>A sustainability-focused exhibition showcasing 100+ eco-brands, panel discussions, and hands-on workshops on circular economy and clean energy.</p>
+          <span class="event-tag">Exhibition</span>
+          <span class="event-tag">Sustainability</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why">
+    <div style="text-align:center;">
+      <div class="section-eyebrow">Why Promotum</div>
+      <div class="section-title">Built on Trust, Driven by Impact</div>
+      <div class="section-desc" style="margin-left:auto;margin-right:auto;">We don't just plan events — we engineer experiences that resonate long after the lights go down.</div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-num">10+</div>
+        <h4>Years of Experience</h4>
+        <p>A decade of delivering flawless events across industries and formats.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">100%</div>
+        <h4>Client Retention</h4>
+        <p>Every client comes back. Our track record speaks for itself.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">360°</div>
+        <h4>Full-Service Approach</h4>
+        <p>Strategy, design, logistics, marketing, and on-ground execution — all in-house.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">24/7</div>
+        <h4>Dedicated Support</h4>
+        <p>A dedicated project manager for every event, available round the clock.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-eyebrow">Get in Touch</div>
+    <div class="section-title">Let's Create Something Remarkable</div>
+    <div class="section-desc">Have an event in mind? We'd love to hear about it. Reach out and let's start planning.</div>
+    <a href="mailto:hello@promotum.com" class="btn-primary" style="display:inline-block;">hello@promotum.com</a>
+    <div class="contact-row">
+      <div class="contact-chip"><span>📞</span> +91 98765 43210</div>
+      <div class="contact-chip"><span>📍</span> Bengaluru, India</div>
+      <div class="contact-chip"><span>🌐</span> www.promotum.com</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Promotum<span>.</span></div>
+    <p>&copy; 2026 Promotum. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Privacy</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
